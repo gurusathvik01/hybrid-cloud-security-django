@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Login Type</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .container {
+            display: inline-block;
+            background: #111;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.6);
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hybrid Cloud Security Portal</h1>
+        <p>Select your login type:</p>
+        <a href="{% url 'admin_login' %}" class="btn">Login as Admin</a>
+        <a href="{% url 'user_login' %}" class="btn">Login as User</a>
+    </div>
+</body>
+</html>

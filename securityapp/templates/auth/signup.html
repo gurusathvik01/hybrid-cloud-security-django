@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Hybrid Cloud Security</title>
+  <style>
+    /* ===========================
+       GENERAL THEME
+    ============================ */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #0d47a1;
+    }
+
+    /* ===========================
+       FORM CONTAINER
+    ============================ */
+    .form-container {
+      background: #ffffff;
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .form-container:hover {
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      color: #0d47a1;
+      margin-bottom: 25px;
+      font-size: 26px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===========================
+       FORM FIELDS
+    ============================ */
+    form {
+      text-align: left;
+    }
+
+    form label {
+      font-weight: 600;
+      color: #0d47a1;
+    }
+
+    form input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      font-size: 15px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    form input:focus {
+      border-color: #1565c0;
+      box-shadow: 0 0 5px rgba(21, 101, 192, 0.3);
+    }
+
+    /* ===========================
+       BUTTON STYLING
+    ============================ */
+    button {
+      width: 100%;
+      background: #1565c0;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0d47a1;
+    }
+
+    /* ===========================
+       FOOTER / LINKS
+    ============================ */
+    p {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    a {
+      color: #0d47a1;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #1565c0;
+      text-decoration: underline;
+    }
+
+    /* ===========================
+       RESPONSIVE
+    ============================ */
+    @media (max-width: 480px) {
+      .form-container {
+        width: 90%;
+        padding: 30px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      button {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>Create Account</h2>
+    <form method="POST" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'user_login' %}">Login here</a></p>
+  </div>
+</body>
+</html>

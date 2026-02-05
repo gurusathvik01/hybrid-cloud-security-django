@@ -1,0 +1,373 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🛡️ Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ===========================
+       GENERAL THEME
+    ============================ */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      margin: 0;
+      padding: 0;
+      color: #0d47a1;
+    }
+
+    h2, h3 {
+      color: #0d47a1;
+    }
+
+    /* ===========================
+       NAVBAR
+    ============================ */
+    .navbar {
+      background: linear-gradient(90deg, #1565c0, #0d47a1);
+      color: white;
+      padding: 12px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #bbdefb;
+    }
+
+    /* ===========================
+       CONTAINER & CARDS
+    ============================ */
+    .container {
+      padding: 30px 60px;
+    }
+
+    .section-card {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 35px;
+      transition: transform 0.2s ease;
+    }
+
+    .section-card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* ===========================
+       TABLE STYLING
+    ============================ */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px 8px;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background: #1976d2;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f1f8ff;
+    }
+
+    tr:hover {
+      background-color: #e3f2fd;
+      transition: background 0.2s ease;
+    }
+
+    .table-scroll {
+      max-height: 350px; /* Limit visible rows to ~10–12 */
+      overflow-y: auto;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .text-danger {
+      color: red;
+      font-weight: 600;
+    }
+
+    .text-normal {
+      color: #333;
+    }
+
+    /* ===========================
+       BUTTONS
+    ============================ */
+    a.btn-download {
+      background: #0d47a1;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    a.btn-download:hover {
+      background: #1565c0;
+    }
+
+    /* ===========================
+       FLEX SECTION (SIDE BY SIDE)
+    ============================ */
+    .flex-sections {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .flex-sections .section-card {
+      flex: 1 1 48%;
+      min-width: 320px;
+      padding: 15px;
+    }
+
+    .flex-sections h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    /* ===========================
+       CHART
+    ============================ */
+    canvas {
+      margin-top: 10px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===========================
+       HEADER
+    ============================ */
+    .dashboard-header {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .logout {
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      background: #ef5350;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .logout:hover {
+      background: #d32f2f;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        padding: 20px;
+      }
+
+      .flex-sections {
+        flex-direction: column;
+      }
+
+      .flex-sections .section-card {
+        flex: 1 1 100%;
+      }
+
+      th, td {
+        font-size: 12px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar a {
+        margin: 8px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div>
+      <a href="/">Go Back</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/admin/">Admin</a>
+    </div>
+    <div>
+      {% if user.is_authenticated %}
+        <a href="/logout/" class="logout">Logout</a>
+      {% else %}
+        <a href="/login/">Login</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="dashboard-header">
+    <h2>Security & Intrusion Detection Dashboard</h2>
+    <p style="color:#333;font-size:15px;">Monitor user activity, detect unauthorized access, and analyze attack trends in real time.</p>
+  </div>
+
+  <div class="container">
+    <!-- File Access & Security Logs -->
+    <div class="section-card">
+      <h3>File Access & Security Logs</h3>
+      <p style="color:#555;font-size:14px;">All recent file interactions — successful (✅) and unauthorized (🚨) access attempts.</p>
+      <div class="table-scroll">
+        <table>
+          <tr>
+            <th>User</th>
+            <th>File</th>
+            <th>IP</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+          {% for log in access_logs %}
+          <tr class="{% if not log.success %}text-danger{% else %}text-normal{% endif %}">
+            <td>{{ log.user.username }}</td>
+            <td>{{ log.file.file.name }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td>{{ log.timestamp }}</td>
+            <td>{% if log.success %}✅{% else %}🚨{% endif %}</td>
+            <td>{{ log.notes }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="6">No access logs available.</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    <!-- File Summary -->
+    <h4>📁 File Access Summary</h4>
+    <table class="table table-bordered text-center shadow-sm">
+      <thead class="table-dark">
+        <tr><th>Type</th><th>Count</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>✅ Authorized</td><td>{{ file_log_summary.Authorized }}</td></tr>
+        <tr><td>🚫 Unauthorized</td><td>{{ file_log_summary.Unauthorized }}</td></tr>
+        <tr><td>⚠️ Errors</td><td>{{ file_log_summary.Errors }}</td></tr>
+        <tr><td>📄 Missing</td><td>{{ file_log_summary.Missing }}</td></tr>
+      </tbody>
+    </table>
+    <br>
+
+    <!-- Compact Side-by-Side Section -->
+    <div class="flex-sections">
+      <div class="section-card">
+        <h3>Intrusion Detection Events</h3>
+        <p style="color:#555;font-size:13px;">Recent IDS model predictions and threat detections.</p>
+        <div class="table-scroll">
+          <table>
+            <tr>
+              <th>Time</th>
+              <th>User</th>
+              <th>IP</th>
+              <th>Attack</th>
+              <th>Pred.</th>
+              <th>Conf.</th>
+              <th>PDF</th>
+            </tr>
+            {% for e in events %}
+            <tr>
+              <td>{{ e.timestamp|date:"H:i:s" }}</td>
+              <td>{{ e.username }}</td>
+              <td>{{ e.source_ip }}</td>
+              <td>{{ e.attack_type }}</td>
+              <td>{{ e.prediction }}</td>
+              <td>{{ e.score|floatformat:2 }}</td>
+              <td>
+                {% if e.prediction == "Attack" %}
+                  <a href="/download_pdf/{{ e.id }}/" class="btn-download">📄</a>
+                {% else %}
+                  <span style="color:gray;">—</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No intrusion events detected yet.</td></tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3>Attack Summary</h3>
+        <p style="color:#555;font-size:13px;">Visualization of the most common attack types detected.</p>
+        <canvas id="chart" height="180"></canvas>
+        {{ attack_summary|json_script:"attack-data" }}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('chart');
+    const attackData = JSON.parse(document.getElementById('attack-data').textContent);
+    const labels = attackData.map(item => item.attack_type);
+    const values = attackData.map(item => item.count);
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Detected Attacks",
+          data: values,
+          backgroundColor: [
+            "rgba(25, 118, 210, 0.7)",
+            "rgba(21, 101, 192, 0.7)",
+            "rgba(13, 71, 161, 0.7)",
+            "rgba(100, 181, 246, 0.7)"
+          ],
+          borderColor: "rgba(13, 71, 161, 1)",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Security Solution</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    h2 { color: #333; }
+    pre {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .back {
+      margin-top: 20px;
+      display: inline-block;
+      text-decoration: none;
+      background: #007BFF;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🧠 AI-Generated Security Analysis</h2>
+    <p><strong>Attack Type:</strong> {{ event.attack_type }}</p>
+    <p><strong>Detected by:</strong> Intrusion Detection System</p>
+
+    <h3>Gemini’s Recommendation:</h3>
+    <pre>{{ suggestion }}</pre>
+
+    <a href="/admin/securityapp/event/" class="back">← Back to Admin Dashboard</a>
+  </div>
+</body>
+</html>

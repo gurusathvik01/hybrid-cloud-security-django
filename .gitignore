@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+
+# Django
+db.sqlite3
+media/
+user_uploads/
+secure_files/
+staticfiles/
+
+# Secrets
+*.key
+.env
+.env.*
+*.pem
+
+# ML models / binaries
+*.pkl
+*.h5
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+# Secrets
+*.key
+security_key.key
+secure_files/
+.env
